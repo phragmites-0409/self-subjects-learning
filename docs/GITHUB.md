@@ -4,7 +4,7 @@
 
 根目录作为一个仓库，包含当前 -3、历史版本、依赖定义、模型清单、Supabase 迁移和维护脚本。`runtimes/`、`归档/`、`发布包/`、各版 `data/`、`.env`、`node_modules/`、构建结果及压缩包由根目录 `.gitignore` 排除。
 
-Supabase GitHub Integration 的 Working directory 为 `.`，已开启 Deploy to production。推送 `main` 后，`supabase/migrations/` 中尚未应用的迁移会自动执行；详见 [Supabase 同步说明](../supabase/README.md)。
+Supabase GitHub Integration 的 Working directory 应为 `.`。要自动部署迁移，还须打开 **Deploy to production**、将 Production branch name 设为 `main` 并保存；此后推送新提交，`supabase/migrations/` 中尚未应用的迁移才会执行。仅显示 GitHub 仓库已连接并不代表生产部署已启用。详见 [Supabase 同步说明](../supabase/README.md)。
 
 上传前在仓库根目录检查：
 
