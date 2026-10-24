@@ -24,7 +24,7 @@
 ./start-local.cmd
 ```
 
-安装会联网下载依赖与基础模型。两个版本分别读取各自 `.env`；需要外部 AI 时，将对应 `.env.example` 复制成 `.env` 并自行配置。普通本地 OCR 不需要 API 密钥。原有两版的数据目录保持独立。
+安装会联网下载依赖与基础模型。各版本分别读取自己的 `.env`。当前 -3 需按 `subjects-learning-3/.env.example` 填写 Supabase Project URL 与 publishable key 才会启用注册登录；切勿放入 secret/service_role key。普通本地 OCR 不需要 API 密钥。各版本的数据目录保持独立。
 
 ## 可选高级模型
 
@@ -60,11 +60,11 @@ GLM-OCR 使用本机回环服务。新权重下载/转换仍须校验，结果�
 # 仅安装基础模型时不加 --all-models
 # & $python ./scripts/check-runtime.py --hashes
 
-Push-Location subjects-learning-2
+Push-Location subjects-learning-3
 & $python -m pytest -q -p no:cacheprovider --basetemp=data/tmp/pytest-check
 Pop-Location
 
-./subjects-learning-2/scripts/build.ps1
+./subjects-learning-3/scripts/build.ps1
 & $python ./scripts/package-source.py
 ```
 

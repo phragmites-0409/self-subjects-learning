@@ -5,12 +5,14 @@
 ## 项目结构
 
 ```text
-subjects-learning-2/   正式本地识别版，端口 8000
+subjects-learning-3/   当前版本：账号登录、独立本地数据与题库，端口 8000
+subjects-learning-2/   上一版本地识别应用，端口 8000
 subjects-learning-1/   外部 AI 旧版，端口 8001
 dependencies/         可提交的依赖锁文件、模型清单、来源及校验值
 runtimes/             本地 Python、OCR/公式/笔迹运行库和模型，不提交 Git
 scripts/              统一安装、迁移修复、检查和源码打包
 docs/                 安装、架构、迁移验收与 GitHub 上传说明
+supabase/             与已关联项目同步的数据库迁移
 发布包/源码/           最新 GitHub 源码 ZIP 和校验信息，不提交 Git
 runtime.json          共享运行目录配置，路径相对仓库根目录
 归档/                 本地历史快照，不提交 Git
@@ -18,7 +20,9 @@ runtime.json          共享运行目录配置，路径相对仓库根目录
 
 ## 使用
 
-本机依赖已迁到当前文件夹，双击根目录 `start-local.cmd`，访问 <http://127.0.0.1:8000/>。停止使用 `stop-local.cmd`。两版独立保存数据。
+本机依赖已迁到当前文件夹，双击根目录 `start-local.cmd`，优先启动本地 `-3`，访问 <http://127.0.0.1:8000/>。停止使用 `stop-local.cmd`。没有 `-3` 目录时使用 `-2`。各版独立保存数据，-3 的初始数据从 -2 一致性备份建立。
+
+当前版本的注册登录接入 Supabase Auth；每个账号的题目、图片和 SQLite 数据独立保存在本机。新账号从空白开始，旧数据不自动归属账号。配置方式和阶段范围见 [当前版本说明](subjects-learning-3/README.md)。
 
 从 GitHub 克隆后的首次安装（Windows x64、Python 3.12，前端还需 Node.js）：
 
@@ -31,11 +35,12 @@ runtime.json          共享运行目录配置，路径相对仓库根目录
 
 ## 开发与上传
 
-- [正式版功能与维护](subjects-learning-2/README.md)
+- [当前版功能与维护](subjects-learning-3/README.md)
 - [依赖分类](dependencies/README.md) · [仓库架构](docs/ARCHITECTURE.md)
 - [GitHub 上传步骤](docs/GITHUB.md) · [第三方来源](THIRD_PARTY_NOTICES.md)
 - [OCR 依赖迁移验收](docs/MIGRATION-2026-10-24.md)
 - [版本说明](docs/版本说明.md)
+- [Supabase 与 GitHub 同步](supabase/README.md)
 
 源码仓库保存代码、依赖规格、模型来源和校验值。个人数据库、原始图片、密钥、历史包、模型权重和已安装运行库由 `.gitignore` 排除。上传前运行 `scripts/package-source.py`，在 `发布包/源码/` 生成纯源码 ZIP 和校验信息；完整数据备份继续使用各版 `scripts/package-project.py`。
 

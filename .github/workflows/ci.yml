@@ -16,7 +16,7 @@ jobs:
       - name: Test backends
         shell: pwsh
         run: |
-          foreach ($project in @('subjects-learning-1', 'subjects-learning-2')) {
+          foreach ($project in @('subjects-learning-1', 'subjects-learning-2', 'subjects-learning-3')) {
             Push-Location $project
             python -m pytest -q -p no:cacheprovider
             if ($LASTEXITCODE -ne 0) { throw "Backend tests failed: $project" }
@@ -25,11 +25,11 @@ jobs:
       - name: Test and build frontends
         shell: pwsh
         run: |
-          foreach ($project in @('subjects-learning-1', 'subjects-learning-2')) {
+          foreach ($project in @('subjects-learning-1', 'subjects-learning-2', 'subjects-learning-3')) {
             Push-Location "$project/frontend"
             npm ci --no-audit --no-fund
             if ($LASTEXITCODE -ne 0) { throw "npm ci failed: $project" }
-            if ($project -eq 'subjects-learning-2') {
+            if ($project -ne 'subjects-learning-1') {
               npm test -- --run
               if ($LASTEXITCODE -ne 0) { throw "Frontend tests failed: $project" }
             }

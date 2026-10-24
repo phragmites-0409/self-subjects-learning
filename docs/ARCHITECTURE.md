@@ -2,7 +2,9 @@
 
 ```text
 subjects-learning/
-├─ subjects-learning-2/       正式本地识别应用：FastAPI + React
+├─ subjects-learning-3/       当前应用：FastAPI + React + Supabase Auth
+│  └─ data/accounts/<id>/    每个账号独立的 SQLite 和对象文件，Git 忽略
+├─ subjects-learning-2/       上一版本地识别应用
 │  ├─ backend/app/core/      配置、运行目录和便携模型路径解析
 │  ├─ backend/app/modules/learning/
 │  │                       OCR、布局、笔迹、修复、公式与业务流程
@@ -17,6 +19,7 @@ subjects-learning/
 ├─ docs/                     安装、架构和 GitHub 发布说明
 ├─ 发布包/源码/               GitHub 源码 ZIP 与校验信息，Git 忽略
 ├─ .github/workflows/        后端回归、前端测试和构建
+├─ supabase/                 与 GitHub 集成同步的数据库迁移
 ├─ runtime.json              唯一共享运行目录配置
 └─ 归档/                     历史版本包、验证记录与移动清单，Git 忽略
 ```
@@ -27,6 +30,8 @@ subjects-learning/
 4. GLM-OCR、UVDoc、LaMa、ExamInk 和公式渲染共用运行目录配置；每个模型保留来源和校验信息。
 5. 正式服务使用本地权重；联网下载集中在显式执行的安装/准备脚本。
 
-`version.json` 负责版本、识别模式与端口，Python 与库位置以根目录 `runtime.json` 为准。Python、PowerShell、Node 三类入口遵循同一配置。主 OCR 与公式、PyTorch 导出工具保持独立环境。
+当前启动入口优先使用 -3。`version.json` 负责版本、识别模式与端口，Python 与库位置以根目录 `runtime.json` 为准。Python、PowerShell、Node 三类入口遵循同一配置。主 OCR 与公式、PyTorch 导出工具保持独立环境。
+
+Supabase Auth 管理邮箱与密码；后端校验登录并按用户 ID 选择本地存储目录。`supabase/migrations/` 只保存云端小数据结构；原图、大文件及题库仍在主设备。GitHub Integration 的 Working directory 为 `.`，生产部署开启后自动应用新迁移。
 
 前端保留各自 `package-lock.json`。本机旧安装的共用 `node_modules` 已迁入仓库；干净克隆由 `npm ci` 为各前端安装依赖，无需目录联接。

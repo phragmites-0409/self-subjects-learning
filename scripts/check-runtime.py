@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "subjects-learning-2/backend"))
+sys.path.insert(0, str(ROOT / "subjects-learning-3/backend"))
 from app.core.runtime import RUNTIME_ROOT, read_manifest
 
 
@@ -99,7 +99,7 @@ def main():
         if formula.exists():
             config = read_manifest(RUNTIME_ROOT / 'models/local-ocr/manifest.json')
             result = subprocess.run(
-                [str(formula), str(ROOT / 'subjects-learning-2/scripts/local-formula-worker.py')],
+                [str(formula), str(ROOT / 'subjects-learning-3/scripts/local-formula-worker.py')],
                 input=json.dumps({'config': config['formula'], 'image': base64.b64encode(raw).decode('ascii')}),
                 encoding='utf-8', capture_output=True, timeout=45, check=False,
                 env={key: value for key, value in os.environ.items() if key != 'PYTHONPATH'},

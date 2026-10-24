@@ -1,0 +1,6 @@
+.draft-question-row{display:flex;align-items:center;gap:16px;min-width:0}
+.draft-question-row>.knowledge-question{flex:1;min-width:0}
+.draft-question-row .draft-delete-button{flex-shrink:0;white-space:nowrap}
+.draft-delete-title{overflow-wrap:anywhere;font-weight:600}
+.draft-delete-backdrop{z-index:1100}
+@media(max-width:600px){.draft-question-row{align-items:flex-start;gap:8px}.draft-question-row .draft-delete-button{margin-top:14px}}

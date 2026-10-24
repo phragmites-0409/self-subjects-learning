@@ -8,7 +8,7 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'runtime.ps1')
-$mainRoot = Join-Path $repositoryRoot 'subjects-learning-2'
+$mainRoot = Join-Path $repositoryRoot 'subjects-learning-3'
 if (!(Test-Path -LiteralPath $python)) {
     $savedPythonPath = $env:PYTHONPATH
     try {
@@ -58,7 +58,7 @@ if ($InkTools) {
 }
 if ($Renderer) { & (Join-Path $mainRoot 'scripts/setup-document-renderer.ps1') }
 if ($Frontend) {
-    foreach ($project in @('subjects-learning-1', 'subjects-learning-2')) {
+    foreach ($project in @('subjects-learning-1', 'subjects-learning-2', 'subjects-learning-3')) {
         Push-Location (Join-Path $repositoryRoot "$project/frontend")
         try {
             npm ci --no-audit --no-fund

@@ -2,7 +2,9 @@
 
 目标仓库：[phragmites-0409/self-subjects-learning](https://github.com/phragmites-0409/self-subjects-learning)，主分支为 `main`。
 
-根目录作为一个仓库，包含正式版、AI 旧版、依赖定义、模型清单和维护脚本。`runtimes/`、`归档/`、`发布包/`、两版 `data/`、`.env`、`node_modules/`、构建结果及压缩包由根目录 `.gitignore` 排除。
+根目录作为一个仓库，包含当前 -3、历史版本、依赖定义、模型清单、Supabase 迁移和维护脚本。`runtimes/`、`归档/`、`发布包/`、各版 `data/`、`.env`、`node_modules/`、构建结果及压缩包由根目录 `.gitignore` 排除。
+
+Supabase GitHub Integration 的 Working directory 为 `.`，已开启 Deploy to production。推送 `main` 后，`supabase/migrations/` 中尚未应用的迁移会自动执行；详见 [Supabase 同步说明](../supabase/README.md)。
 
 上传前在仓库根目录检查：
 

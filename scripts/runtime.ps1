@@ -20,7 +20,7 @@ New-Item -ItemType Directory -Force -Path $env:TEMP | Out-Null
 # ordinary per-project directories. Never traverse or delete the linked target.
 $sharedNodeModules = Join-Path $runtimeRoot 'node_modules'
 if (Test-Path -LiteralPath $sharedNodeModules) {
-    foreach ($project in @('subjects-learning-1', 'subjects-learning-2')) {
+    foreach ($project in @('subjects-learning-1', 'subjects-learning-2', 'subjects-learning-3')) {
         $linkPath = Join-Path $repositoryRoot "$project/frontend/node_modules"
         $link = Get-Item -LiteralPath $linkPath -Force -ErrorAction SilentlyContinue
         if ($link -and $link.LinkType -eq 'Junction' -and [string]$link.Target -ne $sharedNodeModules) {

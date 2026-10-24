@@ -17,10 +17,10 @@
 | `../runtimes/models/` | ONNX、GGUF、Safetensors 等实际权重 | 否 |
 | `../runtimes/document-ocr/` | llama.cpp 本地程序与运行状态 | 否 |
 | `../runtimes/document-renderer/` | 公式打印运行库 | 否 |
-| `../runtimes/node_modules/` | 两版当前共用的前端依赖 | 否 |
+| `../runtimes/node_modules/` | 当前与历史版本共用的前端依赖 | 否 |
 | `../runtimes/cache/`、`tmp/` | 可再生缓存、下载缓存与临时文件 | 否 |
 
-模型清单使用 `runtime:/models/...`，由 `subjects-learning-2/backend/app/core/runtime.py` 展开。它与网络 URL 无关，只表示 `runtime.json` 配置目录内的文件。切换运行目录可设置绝对路径环境变量 `SUBJECTS_LEARNING_RUNTIME`。
+模型清单使用 `runtime:/models/...`，由 `subjects-learning-3/backend/app/core/runtime.py` 展开。它与网络 URL 无关，只表示 `runtime.json` 配置目录内的文件。切换运行目录可设置绝对路径环境变量 `SUBJECTS_LEARNING_RUNTIME`。
 
 `main.txt` 和 `formula.txt` 来自当前已安装依赖的闭包；`ink-tools.txt` 来自现有导出环境并补充 ONNX。新机器恢复步骤见 [安装说明](../docs/INSTALL.md)。模型的运行与转换环境独立，避免公式模型与主 OCR 使用不同 NumPy 版本产生冲突。
 

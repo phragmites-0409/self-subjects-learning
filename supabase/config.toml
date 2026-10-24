@@ -1,0 +1,7 @@
+project_id = "self-subjects-learning"
+
+[db.migrations]
+enabled = true
+
+[db.seed]
+enabled = false
