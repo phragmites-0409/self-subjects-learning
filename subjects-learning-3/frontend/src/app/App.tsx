@@ -65,7 +65,7 @@ function StudyApp() {
           ))}
         </nav>
         <div className="sidebar-foot">
-          {account.user && <div className="account-user"><span>{account.user.email}</span><button type="button" className="link-button" onClick={() => void account.logout()}>退出登录</button></div>}
+          {account.user && <div className="account-user"><span>{account.user.username}</span><button type="button" className="link-button" onClick={() => void account.logout()}>退出登录</button></div>}
           <div className={`local-status ${connected ? "" : "disconnected"}`}>
             <i />
             {connected ? "本地服务已连接" : "正在连接本地服务"}

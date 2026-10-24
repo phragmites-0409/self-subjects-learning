@@ -6,7 +6,7 @@ afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 
 function PrivateView() {
   const { user, logout } = useAccount();
-  return <div>{user?.email}<button onClick={() => void logout()}>退出登录</button></div>;
+  return <div>{user?.username}<button onClick={() => void logout()}>退出登录</button></div>;
 }
 
 it("requires Supabase sign-in before mounting private content and clears it on logout", async () => {
@@ -15,19 +15,20 @@ it("requires Supabase sign-in before mounting private content and clears it on l
     if (url.endsWith("/auth/me")) return { ok: false, json: async () => ({ error: { message: "请先登录" } }) };
     if (url.endsWith("/auth/login")) {
       expect(options?.method).toBe("POST");
-      return { ok: true, json: async () => ({ user: { id: "u1", email: "first@example.com" } }) };
+      expect(JSON.parse(String(options?.body))).toEqual({ username: "first", password: "password123" });
+      return { ok: true, json: async () => ({ user: { id: "u1", username: "first" } }) };
     }
     return { ok: true, json: async () => ({ ok: true }) };
   });
   vi.stubGlobal("fetch", fetch);
   render(<AuthGate><PrivateView /></AuthGate>);
   await screen.findByRole("region", { name: "登录" });
-  expect(screen.queryByText("first@example.com")).not.toBeInTheDocument();
-  fireEvent.change(screen.getByLabelText("邮箱"), { target: { value: "first@example.com" } });
+  expect(screen.queryByText("first")).not.toBeInTheDocument();
+  fireEvent.change(screen.getByLabelText("用户名"), { target: { value: "first" } });
   fireEvent.change(screen.getByLabelText("密码"), { target: { value: "password123" } });
   fireEvent.click(screen.getByRole("button", { name: "登录" }));
-  await screen.findByText("first@example.com");
+  await screen.findByText("first");
   fireEvent.click(screen.getByRole("button", { name: "退出登录" }));
   await waitFor(() => expect(screen.getByRole("region", { name: "登录" })).toBeInTheDocument());
-  expect(screen.queryByText("first@example.com")).not.toBeInTheDocument();
+  expect(screen.queryByText("first")).not.toBeInTheDocument();
 });

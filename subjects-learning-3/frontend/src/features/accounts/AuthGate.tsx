@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { api } from "../../api/client";
 
-type User = { id: string; email: string };
+type User = { id: string; username: string };
 type AuthState = { user: User | null; logout: () => Promise<void> };
 const AuthContext = createContext<AuthState>({ user: null, logout: async () => {} });
 export const useAccount = () => useContext(AuthContext);
@@ -11,7 +11,7 @@ export default function AuthGate({ children }: { children: ReactNode }) {
   const [mode, setMode] = useState<"loading" | "legacy" | "login" | "ready">("loading");
   const [user, setUser] = useState<User | null>(null);
   const [register, setRegister] = useState(false);
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
@@ -40,17 +40,15 @@ export default function AuthGate({ children }: { children: ReactNode }) {
     setNotice("");
     try {
       if (register) {
-        const result = await api<{ email_confirmation_required: boolean }>("/auth/register", {
-          method: "POST", body: JSON.stringify({ email, password }),
+        await api<{ username: string }>("/auth/register", {
+          method: "POST", body: JSON.stringify({ username, password }),
         });
-        setNotice(result.email_confirmation_required
-          ? "注册成功，请打开验证邮件，确认邮箱后再登录。"
-          : "注册成功，请登录。");
+        setNotice("注册成功，请登录。");
         setRegister(false);
         setPassword("");
       } else {
         const result = await api<{ user: User }>("/auth/login", {
-          method: "POST", body: JSON.stringify({ email, password }),
+          method: "POST", body: JSON.stringify({ username, password }),
         });
         setPassword("");
         setUser(result.user);
@@ -79,10 +77,11 @@ export default function AuthGate({ children }: { children: ReactNode }) {
       <h1>题研</h1>
       <p>个人学习资料保存在这台设备的独立账号目录；登录后会更新云端目录。</p>
       <form onSubmit={submit}>
-        <label>邮箱<input type="email" autoComplete="email" required value={email} onChange={event => setEmail(event.target.value)} /></label>
-        <label>密码<input type="password" autoComplete={register ? "new-password" : "current-password"} required minLength={6} value={password} onChange={event => setPassword(event.target.value)} /></label>
+        <label>用户名<input type="text" autoComplete="username" required minLength={3} maxLength={24} value={username} onChange={event => setUsername(event.target.value)} /></label>
+        <label>密码<input type="password" autoComplete={register ? "new-password" : "current-password"} required minLength={8} maxLength={128} value={password} onChange={event => setPassword(event.target.value)} /></label>
         <button className="button primary" type="submit" disabled={busy}>{busy ? "请稍候…" : register ? "注册" : "登录"}</button>
       </form>
+      {register && <p>用户名支持 3–24 个字母、数字、下划线或连字符。未绑定邮箱，忘记密码后暂时无法自助找回。</p>}
       {notice && <p role="status">{notice}</p>}
       <button className="link-button" type="button" onClick={() => { setRegister(!register); setNotice(""); }}>{register ? "已有账号？登录" : "没有账号？注册"}</button>
     </section>

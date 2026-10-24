@@ -2,9 +2,9 @@
 
 ## 账号与本地数据隔离
 
-网页现提供邮箱注册、登录、退出；密码由 Supabase Auth 管理，本机不另存密码。新账号的 SQLite、图片和临时文件按已验证的用户 ID 存在 `data/accounts/<用户ID>/`，同机切换账号不会打开另一账号的题目或文件。原有 `data/db` 与 `data/objects` 不自动归属新账号，仍作为 -3 旧数据保存。
+网页现提供用户名注册、登录、退出，不收集邮箱；密码由 Supabase Auth 管理，本机不另存密码。用户名为 3–24 位字母、数字、下划线或连字符（支持中文字符），登录时忽略字母大小写。新账号的 SQLite、图片和临时文件按已验证的用户 ID 存在 `data/accounts/<用户ID>/`，同机切换账号不会打开另一账号的题目或文件。原有 `data/db` 与 `data/objects` 不自动归属新账号，仍作为 -3 旧数据保存。
 
-连接登录服务时，从现有 Supabase 项目的 **Project URL** 和 **publishable key** 填入本机 `subjects-learning-3/.env` 的 `SUPABASE_URL`、`SUPABASE_PUBLISHABLE_KEY`；勿填写 secret/service_role key。可参考 `.env.example`。启动服务后注册；若项目要求验证邮箱，先完成邮件验证再登录。未配置时仍可使用原有本地页面，账号隔离尚未启用。
+连接登录服务时，从现有 Supabase 项目的 **Project URL** 和 **publishable key** 填入本机 `subjects-learning-3/.env` 的 `SUPABASE_URL`、`SUPABASE_PUBLISHABLE_KEY`；勿填写 secret/service_role key。可参考 `.env.example`。必须先应用仓库根目录的 `20261025020000_username_auth.sql` 迁移，并在 Supabase **Authentication → Providers → Email** 关闭 **Confirm email**，否则无邮箱注册会被服务端拒绝。应用使用用户名生成不可投递的内部邮箱标识供 Supabase Auth 登录，用户无须填写或看到它。由于没有真实邮箱或手机号，目前忘记密码后无法自助找回，请妥善保管密码。未配置 Supabase 时仍可使用原有本地页面，账号隔离尚未启用。
 
 此阶段使用 Supabase Auth，仓库根目录的迁移建立用户档案与账号私有的学习目录。登录后后台尝试上报这台设备的题目、试卷、知识库、单词和文件目录；设置页可查看标题、正式题目的简短摘要、关系和校验值，并手动重试。完整题目、图片和长文仍存各设备本机，云端目录不等于内容备份；跨设备内容传输、云端备份与论坛尚未接通。当前浏览器登录会话只在本地服务进程中保存；重启服务后须重新登录。Android 客户端将在后续阶段实现。
 

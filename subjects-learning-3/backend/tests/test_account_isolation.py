@@ -16,23 +16,26 @@ def test_registered_accounts_have_separate_questions_and_original_files(client, 
     legacy = client.post("/api/v1/learning/intake", json={"text": "原 -3 的本地题目"}).json()
     enable_auth(monkeypatch)
     first, second = str(uuid4()), str(uuid4())
-    users = {"first@example.com": first, "second@example.com": second}
+    users = {auth._auth_email("first"): first, auth._auth_email("second"): second}
 
     async def upstream(method, path, *, payload=None, token=""):
+        if path == "settings":
+            return {"mailer_autoconfirm": True}
         if path == "signup":
-            return {"user": {"id": users[payload["email"]]}}
+            return {"user": {"id": users[payload["email"]]}, "access_token": "signup-token"}
         if path == "token?grant_type=password":
             uid = users[payload["email"]]
-            return {"user": {"id": uid, "email": payload["email"]}, "access_token": uid,
+            return {"user": {"id": uid, "user_metadata": {"username": "first" if uid == first else "second"}}, "access_token": uid,
                     "refresh_token": f"refresh-{uid}", "expires_in": 3600}
         return {}
 
     monkeypatch.setattr(auth, "_auth_request", upstream)
     assert client.get("/api/v1/auth/config").json() == {"enabled": True}
     assert client.get("/api/v1/learning/questions").status_code == 401
-    assert client.post("/api/v1/auth/register", json={"email": "first@example.com", "password": "password123"}).json() == {"email_confirmation_required": True}
+    assert client.post("/api/v1/auth/register", json={"username": "first", "password": "password123"}).json() == {"username": "first"}
 
-    client.post("/api/v1/auth/login", json={"email": "first@example.com", "password": "password123"})
+    client.post("/api/v1/auth/login", json={"username": "first", "password": "password123"})
+    assert client.get("/api/v1/auth/me").json() == {"id": first, "username": "first"}
     first_cookie = client.cookies.get(auth.COOKIE)
     first_upload = client.post("/api/v1/assets", files={"file": ("first.png", png_bytes, "image/png")}).json()
     digest = sha256(png_bytes).hexdigest()
@@ -42,7 +45,7 @@ def test_registered_accounts_have_separate_questions_and_original_files(client, 
     assert client.get("/api/v1/learning/questions?filter=draft").json()["total"] == 1
     assert client.get(f"/api/v1/learning/questions/{legacy['id']}").status_code == 404
 
-    client.post("/api/v1/auth/login", json={"email": "second@example.com", "password": "password123"})
+    client.post("/api/v1/auth/login", json={"username": "second", "password": "password123"})
     second_cookie = client.cookies.get(auth.COOKIE)
     assert first_cookie != second_cookie
     assert client.get("/api/v1/learning/questions?filter=draft").json()["total"] == 0
@@ -70,14 +73,14 @@ def test_logout_and_forged_session_cannot_read_private_data(client, monkeypatch)
 
     async def upstream(method, path, *, payload=None, token=""):
         if path == "token?grant_type=password":
-            return {"user": {"id": str(uuid4()), "email": payload["email"]},
+            return {"user": {"id": str(uuid4()), "user_metadata": {"username": "alice"}},
                     "access_token": "token", "refresh_token": "refresh", "expires_in": 3600}
         return {}
 
     monkeypatch.setattr(auth, "_auth_request", upstream)
     client.cookies.set(auth.COOKIE, "forged")
     assert client.get("/api/v1/learning/questions").status_code == 401
-    assert client.post("/api/v1/auth/login", json={"email": "a@example.com", "password": "password123"}).status_code == 200
+    assert client.post("/api/v1/auth/login", json={"username": "alice", "password": "password123"}).status_code == 200
     assert client.post("/api/v1/auth/logout").status_code == 200
     assert client.get("/api/v1/learning/questions").status_code == 401
 
@@ -87,15 +90,42 @@ def test_expired_upstream_session_requires_fresh_login(client, monkeypatch):
 
     async def upstream(method, path, *, payload=None, token=""):
         if path == "token?grant_type=password":
-            return {"user": {"id": str(uuid4()), "email": payload["email"]},
+            return {"user": {"id": str(uuid4()), "user_metadata": {"username": "alice"}},
                     "access_token": "token", "refresh_token": "refresh", "expires_in": 0}
         if path == "token?grant_type=refresh_token":
             raise AppError("AUTH_REJECTED", "令牌失效", 401)
         return {}
 
     monkeypatch.setattr(auth, "_auth_request", upstream)
-    assert client.post("/api/v1/auth/login", json={"email": "a@example.com", "password": "password123"}).status_code == 200
+    assert client.post("/api/v1/auth/login", json={"username": "alice", "password": "password123"}).status_code == 200
     expired_cookie = client.cookies.get(auth.COOKIE)
     assert client.get("/api/v1/auth/me").status_code == 401
     assert expired_cookie not in auth._sessions
     assert client.get("/api/v1/learning/questions").status_code == 401
+
+
+def test_username_registration_requires_auto_confirmation(client, monkeypatch):
+    enable_auth(monkeypatch)
+    calls = []
+
+    async def upstream(method, path, *, payload=None, token=""):
+        calls.append(path)
+        return {"mailer_autoconfirm": False}
+
+    monkeypatch.setattr(auth, "_auth_request", upstream)
+    response = client.post("/api/v1/auth/register", json={"username": "alice", "password": "password123"})
+    assert response.status_code == 503
+    assert calls == ["settings"]
+
+
+def test_username_login_rejects_mismatched_identity(client, monkeypatch):
+    enable_auth(monkeypatch)
+
+    async def upstream(method, path, *, payload=None, token=""):
+        return {"user": {"id": str(uuid4()), "user_metadata": {"username": "other"}},
+                "access_token": "token", "refresh_token": "refresh", "expires_in": 3600}
+
+    monkeypatch.setattr(auth, "_auth_request", upstream)
+    response = client.post("/api/v1/auth/login", json={"username": "alice", "password": "password123"})
+    assert response.status_code == 401
+    assert auth.COOKIE not in client.cookies
