@@ -1,6 +1,7 @@
 """Supabase Auth boundary and short-lived, server-held browser sessions."""
 
 import asyncio
+import logging
 import secrets
 import time
 from dataclasses import dataclass, field
@@ -8,7 +9,7 @@ from dataclasses import dataclass, field
 import httpx
 from app.core.config import get_settings
 from app.core.errors import AppError
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, BackgroundTasks, Request
 from fastapi.responses import JSONResponse
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -131,14 +132,32 @@ async def register(body: dict):
     return {"email_confirmation_required": not bool(data.get("access_token"))}
 
 
+async def _sync_directory_after_login(user_id: str, token: str) -> None:
+    """Best-effort directory refresh; login must work even while cloud is unavailable."""
+    from app.core.account_scope import reset_account, set_account
+    from app.db.session import SessionLocal
+    from app.modules.accounts.cloud_catalog import sync_catalog
+
+    scope = set_account(user_id)
+    try:
+        with SessionLocal() as db:
+            await sync_catalog(db, user_id, token)
+    except Exception:
+        logging.getLogger(__name__).exception("Cloud directory refresh after login failed")
+    finally:
+        reset_account(scope)
+
+
 @router.post("/login")
-async def login(body: dict):
+async def login(body: dict, background: BackgroundTasks):
     email, password = _credentials(body)
     data = await _auth_request(
         "POST", "token?grant_type=password", payload={"email": email, "password": password}
     )
     response = JSONResponse({"user": {"id": data["user"]["id"], "email": data["user"].get("email")}})
     _store_session(data, response)
+    background.add_task(_sync_directory_after_login, data["user"]["id"], data["access_token"])
+    response.background = background
     return response
 
 

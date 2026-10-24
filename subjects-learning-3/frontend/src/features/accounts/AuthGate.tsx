@@ -77,7 +77,7 @@ export default function AuthGate({ children }: { children: ReactNode }) {
   if (mode === "login") return <main className="account-screen">
     <section className="account-card" aria-label={register ? "注册" : "登录"}>
       <h1>题研</h1>
-      <p>个人学习资料保存在这台主设备的独立账号目录。</p>
+      <p>个人学习资料保存在这台设备的独立账号目录；登录后会更新云端目录。</p>
       <form onSubmit={submit}>
         <label>邮箱<input type="email" autoComplete="email" required value={email} onChange={event => setEmail(event.target.value)} /></label>
         <label>密码<input type="password" autoComplete={register ? "new-password" : "current-password"} required minLength={6} value={password} onChange={event => setPassword(event.target.value)} /></label>

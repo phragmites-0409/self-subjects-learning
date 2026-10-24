@@ -1,5 +1,7 @@
 import { useState } from "react";
 import ReviewSettings from "./ReviewSettings";
+import CloudCatalog from "./CloudCatalog";
+import { useAccount } from "../../features/accounts/AuthGate";
 import { Preferences, STEM } from "./types";
 import { Header, Notice, patch, useData, message } from "./shared";
 
@@ -242,15 +244,17 @@ function Editor({ data }: { data: Settings }) {
   );
 }
 export default function SettingsPage() {
+  const account = useAccount();
   const { data, error } = useData<Settings>("/learning/settings");
   return (
     <div className="page learning-page">
       <Header
         title="设置"
-        detail="单机单人使用；已经生成的试卷、答案基准及周报告保留原样。"
+        detail="按账号保存本机学习数据；已经生成的试卷、答案基准及周报告保留原样。"
       />
       <Notice error={error} />
       {data ? <Editor data={data} /> : <p>正在读取设置…</p>}
+      {account.user && <CloudCatalog />}
     </div>
   );
 }

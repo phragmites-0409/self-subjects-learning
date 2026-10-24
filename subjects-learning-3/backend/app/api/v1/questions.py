@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.ai.gateway import AIGateway
 from app.ai.providers.deepseek import DeepSeekProvider
+from app.core.account_scope import account_id
 from app.core.config import get_settings
 from app.core.errors import AppError
 from app.db.models import Question
@@ -66,6 +67,8 @@ def delete_question(question_id: str, db: Session = Depends(get_db)):
     question = db.get(Question, question_id)
     if not question:
         raise AppError("QUESTION_NOT_FOUND", "题目不存在", 404)
+    if account_id() is not None:
+        raise AppError("REPLICA_REQUIRED", "正式题目删除需先确认另一台在线设备已完成副本校验", 409)
     question.status = "deleted"
     db.commit()
     return {"id": question_id, "deleted": True}
