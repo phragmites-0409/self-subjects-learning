@@ -1,0 +1,24 @@
+{
+  "architectures": [
+    "InkEraserModel"
+  ],
+  "model_type": "unet_plus_plus",
+  "encoder_name": "resnet50",
+  "in_channels": 3,
+  "classes": 3,
+  "decoder_attention_type": "scse",
+  "activation": "sigmoid",
+  "framework": "pytorch-lightning",
+  "training_config": {
+    "lr": 0.0001,
+    "weight_decay": 0.01,
+    "loss_w_charb": 0.78,
+    "loss_w_ssim": 0.16,
+    "loss_w_edge": 0.06,
+    "use_mask_loss": true,
+    "loss_mask_weight": 10.0,
+    "charbonnier_eps": 0.001
+  },
+  "description": "Ink Erasure Model - Handwritten ink removal using U-Net++",
+  "license": "MIT"
+}

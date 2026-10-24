@@ -1,0 +1,2 @@
+# Optional UVDoc / ExamInk ONNX conversion tools (not needed to run existing exports).
+onnx==1.17.0

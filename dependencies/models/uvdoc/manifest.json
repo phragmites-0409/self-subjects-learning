@@ -1,0 +1,11 @@
+{
+  "source": "https://huggingface.co/PaddlePaddle/UVDoc_onnx",
+  "revision": "3bcf535371727d11e783101f79a504c68848aae3",
+  "path": "runtime:/models/uvdoc/inference.onnx",
+  "sha256": "54cab30dc2cf347b4f3d6971c833b1c3d84f5ef17280f1f6d15796bff20e63d6",
+  "license": "Apache-2.0",
+  "preview_only": true,
+  "grid_path": "runtime:/models/uvdoc/inference-grid.onnx",
+  "grid_sha256": "7afe0261539b473f88f7d3371d6ecfadb17fa4279df276f55a7d54df839652ce",
+  "conversion": "Expose pre-resize mesh; original operators/weights unchanged"
+}

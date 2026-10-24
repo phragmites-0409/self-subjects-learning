@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "root": "runtimes",
+  "python": "python/python.exe",
+  "packages": "local-ocr-packages",
+  "formula_python": "formula/Scripts/python.exe",
+  "ink_python": "ink-erase/Scripts/python.exe"
+}

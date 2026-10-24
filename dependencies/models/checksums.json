@@ -1,0 +1,100 @@
+{
+  "algorithm": "sha256",
+  "files": [
+    {
+      "path": "runtime:/models/diagram-repair/lama_fp32.onnx",
+      "bytes": 208044816,
+      "sha256": "1faef5301d78db7dda502fe59966957ec4b79dd64e16f03ed96913c7a4eb68d6"
+    },
+    {
+      "path": "runtime:/models/exam-ink-seg/model.onnx",
+      "bytes": 204486680,
+      "sha256": "957b08e646dedf3f54d8bb3e6c0fa73d1568c8c6c628a1cf24e60d9018430df2"
+    },
+    {
+      "path": "runtime:/models/exam-ink-seg/model.safetensors",
+      "bytes": 204810588,
+      "sha256": "f23fa08ab21b5acce191c29c3f96dced710ad36cd20a319ca4bdb79f9432c42f"
+    },
+    {
+      "path": "runtime:/models/glm-ocr/GLM-OCR-Q8_0.gguf",
+      "bytes": 950433408,
+      "sha256": "45bc244a6446aff850521dc41f18bc8d7105ad5f0c2c8c28af04e7cc4f4d50b1"
+    },
+    {
+      "path": "runtime:/models/glm-ocr/mmproj-GLM-OCR-Q8_0.gguf",
+      "bytes": 484403648,
+      "sha256": "9c4b58e33e316ed142eb5dcb41abec3844d3e6e5dc361ffb782c3fa9d175141f"
+    },
+    {
+      "path": "runtime:/models/handwriting-layout/model_cpu.onnx",
+      "bytes": 279870073,
+      "sha256": "4965c865be210e8074e10cb828a4b4c59b0ec6c7e9bac42d2c21b7c95f0488a7"
+    },
+    {
+      "path": "runtime:/models/handwriting-layout/model_quantized.onnx",
+      "bytes": 78903193,
+      "sha256": "d62e27bd99134d3fada579e43740b121fdef29b4dac669e8acde03a9f3a6c860"
+    },
+    {
+      "path": "runtime:/models/ink-erase/model.safetensors",
+      "bytes": 204806056,
+      "sha256": "78acd1c02b274179ae975134eb827ed0bdb34d4e5890b7981f8dde08bb35eb7a"
+    },
+    {
+      "path": "runtime:/models/local-ocr/formula-decoder.onnx",
+      "bytes": 50952726,
+      "sha256": "bd695497bf1b22279b7626f5916c79226e1e244c84355f8da7edfd2d921d0072"
+    },
+    {
+      "path": "runtime:/models/local-ocr/formula-encoder.onnx",
+      "bytes": 89008136,
+      "sha256": "01bf5dc25539ca0cd5b1bd29296ea495977a6ba5f629dc4178277809d26e5e7d"
+    },
+    {
+      "path": "runtime:/models/local-ocr/formula-image_resizer.onnx",
+      "bytes": 38967751,
+      "sha256": "e0b075c39700f64d50400f39c8fc186bbb3b5d84d31864008313f376603aca9d"
+    },
+    {
+      "path": "runtime:/models/local-ocr/formula-tokenizer.json",
+      "bytes": 24174,
+      "sha256": "1dc27b18d6a518d0d5ff3f4bb7bd98521fe80ad39e5b2a246d4109f1bb9d5019"
+    },
+    {
+      "path": "runtime:/models/local-ocr/layout-docstructbench.onnx",
+      "bytes": 75324621,
+      "sha256": "3b452baef10ecabd615491bc82cc4d49475fbc2cd7a8e535044f2c6bb28fb9fe"
+    },
+    {
+      "path": "runtime:/models/local-ocr/layout.onnx",
+      "bytes": 75324621,
+      "sha256": "3b452baef10ecabd615491bc82cc4d49475fbc2cd7a8e535044f2c6bb28fb9fe"
+    },
+    {
+      "path": "runtime:/models/local-ocr/text-cls.onnx",
+      "bytes": 585532,
+      "sha256": "e47acedf663230f8863ff1ab0e64dd2d82b838fceb5957146dab185a89d6215c"
+    },
+    {
+      "path": "runtime:/models/local-ocr/text-det.onnx",
+      "bytes": 9929594,
+      "sha256": "090f04abcd9d9a7498bc4ebf677e4cb9bdce1fe4197ddb7e529f1ef44e1ff94f"
+    },
+    {
+      "path": "runtime:/models/local-ocr/text-rec.onnx",
+      "bytes": 21234383,
+      "sha256": "6f327246b50388f3c176ae304bd95767ea6dc0c9ae92153ef8cbe210b3c14884"
+    },
+    {
+      "path": "runtime:/models/uvdoc/inference-grid.onnx",
+      "bytes": 31684190,
+      "sha256": "7afe0261539b473f88f7d3371d6ecfadb17fa4279df276f55a7d54df839652ce"
+    },
+    {
+      "path": "runtime:/models/uvdoc/inference.onnx",
+      "bytes": 31684150,
+      "sha256": "54cab30dc2cf347b4f3d6971c833b1c3d84f5ef17280f1f6d15796bff20e63d6"
+    }
+  ]
+}

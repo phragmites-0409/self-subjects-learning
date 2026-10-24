@@ -1,0 +1,46 @@
+# Local engines and model binaries are restored from dependencies/.
+/runtimes/
+/归档/
+/发布包/
+*.zip
+*.rar
+*.7z
+*.onnx
+*.gguf
+*.safetensors
+*.pt
+*.pth
+*.exe
+*.dll
+*.whl
+
+# Databases, original uploads, backups, credentials and service state.
+**/data/
+**/.env
+**/.env.*
+!**/.env.example
+*.sqlite
+*.sqlite3
+*.db
+*.log
+*.pid
+*.pem
+*.key
+
+# Reinstallable development outputs.
+**/node_modules/
+**/dist/
+**/output/
+**/.venv*/
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+*.tsbuildinfo
+.coverage
+htmlcov/
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

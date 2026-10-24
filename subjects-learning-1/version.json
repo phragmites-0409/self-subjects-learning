@@ -1,0 +1,6 @@
+{
+  "version": "-1",
+  "port": 8001,
+  "recognition": "api",
+  "runtime_config": "../runtime.json"
+}

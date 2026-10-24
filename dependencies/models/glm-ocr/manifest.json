@@ -1,0 +1,30 @@
+{
+  "source": "https://huggingface.co/zai-org/GLM-OCR",
+  "conversion_source": "https://huggingface.co/ggml-org/GLM-OCR-GGUF",
+  "revision": "65a42de1148dbed2297e922b5dbc7d9b70c36578",
+  "license": "MIT (upstream model)",
+  "quantization": "Q8_0",
+  "files": [
+    {
+      "path": "runtime:/models/glm-ocr/GLM-OCR-Q8_0.gguf",
+      "url": "https://huggingface.co/ggml-org/GLM-OCR-GGUF/resolve/65a42de1148dbed2297e922b5dbc7d9b70c36578/GLM-OCR-Q8_0.gguf",
+      "bytes": 950433408,
+      "sha256": "45bc244a6446aff850521dc41f18bc8d7105ad5f0c2c8c28af04e7cc4f4d50b1"
+    },
+    {
+      "path": "runtime:/models/glm-ocr/mmproj-GLM-OCR-Q8_0.gguf",
+      "url": "https://huggingface.co/ggml-org/GLM-OCR-GGUF/resolve/65a42de1148dbed2297e922b5dbc7d9b70c36578/mmproj-GLM-OCR-Q8_0.gguf",
+      "bytes": 484403648,
+      "sha256": "9c4b58e33e316ed142eb5dcb41abec3844d3e6e5dc361ffb782c3fa9d175141f"
+    },
+    {
+      "path": "runtime:/document-ocr/llama-b11429-bin-win-vulkan-x64.zip",
+      "url": "https://github.com/ggml-org/llama.cpp/releases/download/b11429/llama-b11429-bin-win-vulkan-x64.zip",
+      "bytes": 33337769,
+      "sha256": "1bfe78ad9168b79fa02bf67f6af9f5e17a966d824d77238517f7bef12ac73b36"
+    }
+  ],
+  "engine_dir": "runtime:/document-ocr/llama-b11429-vulkan",
+  "loopback_only": true,
+  "external_api_calls": false
+}

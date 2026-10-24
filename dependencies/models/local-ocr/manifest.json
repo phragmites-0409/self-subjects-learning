@@ -1,0 +1,25 @@
+{
+  "ocr": {
+    "Det.model_path": "runtime:/models/local-ocr/text-det.onnx",
+    "Cls.model_path": "runtime:/models/local-ocr/text-cls.onnx",
+    "Rec.model_path": "runtime:/models/local-ocr/text-rec.onnx",
+    "EngineConfig.onnxruntime.intra_op_num_threads": 4,
+    "EngineConfig.onnxruntime.inter_op_num_threads": 1
+  },
+  "layout": {
+    "model_type": "doclayout_docstructbench",
+    "model_dir_or_path": "runtime:/models/local-ocr/layout.onnx",
+    "engine_cfg": {
+      "intra_op_num_threads": 4,
+      "inter_op_num_threads": 1
+    },
+    "conf_thresh": 0.5
+  },
+  "formula": {
+    "image_resizer_path": "runtime:/models/local-ocr/formula-image_resizer.onnx",
+    "encoder_path": "runtime:/models/local-ocr/formula-encoder.onnx",
+    "decoder_path": "runtime:/models/local-ocr/formula-decoder.onnx",
+    "tokenizer_json": "runtime:/models/local-ocr/formula-tokenizer.json"
+  },
+  "formula_python": "runtime:/formula/Scripts/python.exe"
+}

@@ -1,0 +1,9 @@
+{
+  "source": "https://huggingface.co/ynyg/InkErase",
+  "revision": "362c38441a6aa03c915bf4a28b6c33a692c2ce33",
+  "file": "runtime:/models/ink-erase/model.safetensors",
+  "bytes": 204806056,
+  "sha256": "78acd1c02b274179ae975134eb827ed0bdb34d4e5890b7981f8dde08bb35eb7a",
+  "license_notes": "metadata Apache-2.0; config/README MIT; keep provenance; personal evaluation only",
+  "production_enabled": false
+}

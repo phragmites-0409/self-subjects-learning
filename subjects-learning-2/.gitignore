@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.venv-localocr/
+.venv-formula/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Node
+node_modules/
+dist/
+*.tsbuildinfo
+output/
+
+# Environment
+.env
+
+# Local data (keep only directory placeholders)
+data/*
+!data/.gitkeep
+!data/db/.gitkeep
+!data/objects/.gitkeep
+!data/tmp/.gitkeep
+!data/logs/.gitkeep
+!data/backups/.gitkeep
+
+# IDE
+.vscode/
+.idea/

@@ -1,0 +1,27 @@
+{
+  "source": "https://huggingface.co/ynyg/ExamInk-Seg",
+  "revision": "72bcd67da4c0e19cf5e64a3d316bf1a81b723126",
+  "file": "runtime:/models/exam-ink-seg/model.safetensors",
+  "bytes": 204810588,
+  "sha256": "f23fa08ab21b5acce191c29c3f96dced710ad36cd20a319ca4bdb79f9432c42f",
+  "license_notes": "metadata Apache-2.0; config/README MIT; keep provenance; personal evaluation only",
+  "onnx_file": "runtime:/models/exam-ink-seg/model.onnx",
+  "onnx_sha256": "957b08e646dedf3f54d8bb3e6c0fa73d1568c8c6c628a1cf24e60d9018430df2",
+  "onnx_bytes": 204486680,
+  "onnx_max_logit_difference": 1.239776611328125e-05,
+  "normalization": {
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ]
+  },
+  "usage": "Only refine an explicit user removal brush; always preview, never automatic full-page erasure",
+  "full_page_automatic_enabled": false,
+  "brush_refinement_enabled": true
+}

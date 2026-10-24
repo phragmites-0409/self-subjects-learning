@@ -1,0 +1,20 @@
+{
+  "model": "runtime:/models/handwriting-layout/model_cpu.onnx",
+  "sha256": "4965c865be210e8074e10cb828a4b4c59b0ec6c7e9bac42d2c21b7c95f0488a7",
+  "revision": "b313bb673622048dc348e2cf88a4b005946c6dd8",
+  "source": "https://huggingface.co/onnx-community/rt-detrv2-heron-101-rukopys-ONNX",
+  "license": "Apache-2.0",
+  "labels": [
+    "handwritten",
+    "printed",
+    "formula",
+    "table",
+    "annotation",
+    "image",
+    "graph"
+  ],
+  "training_domain": "Ukrainian documents; Chinese exam performance must be verified",
+  "original_sha256": "d62e27bd99134d3fada579e43740b121fdef29b4dac669e8acde03a9f3a6c860",
+  "conversion": "ConvInteger replaced by Cast/Sub/Conv; downstream scales retained",
+  "converted_convolutions": 148
+}

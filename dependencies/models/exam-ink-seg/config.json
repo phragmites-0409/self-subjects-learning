@@ -1,0 +1,69 @@
+{
+  "architectures": [
+    "InkEraserModel"
+  ],
+  "model_type": "unet_plus_plus",
+  "encoder_name": "resnet50",
+  "encoder_weights": "imagenet",
+  "in_channels": 3,
+  "classes": 1,
+  "decoder_attention_type": "scse",
+  "activation": "sigmoid",
+  "framework": "pytorch-lightning",
+  "task": "binary-segmentation",
+  "input_normalization": {
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "max_pixel_value": 255.0
+  },
+  "training_config": {
+    "optimizer": "AdamW",
+    "lr": 3e-05,
+    "weight_decay": 1e-05,
+    "loss": {
+      "dice_weight": 0.8,
+      "bce_weight": 0.2,
+      "bce_pos_weight": 2.0,
+      "dice_from_logits": true
+    },
+    "metrics": [
+      "iou_03",
+      "iou_05",
+      "f1_03",
+      "f1_05"
+    ],
+    "scheduler": {
+      "name": "ReduceLROnPlateau",
+      "mode": "max",
+      "monitor": "val_iou_05",
+      "factor": 0.5,
+      "patience": 2,
+      "min_lr": 1e-07
+    },
+    "train": {
+      "batch_size": 6,
+      "crop_size": 1024,
+      "accumulate_grad_batches": 4,
+      "precision": "bf16-mixed",
+      "max_epochs": 200,
+      "min_epochs": 5
+    }
+  },
+  "inference": {
+    "sliding_window": {
+      "tile": 1024,
+      "stride": 768,
+      "tta_hflip": true
+    }
+  },
+  "description": "ExamInk-Seg 二值墨迹分割模型（U-Net++ + ResNet50 编码器）。",
+  "license": "MIT"
+}

@@ -1,0 +1,6 @@
+{
+  "version": "-2",
+  "port": 8000,
+  "recognition": "local",
+  "runtime_config": "../runtime.json"
+}
